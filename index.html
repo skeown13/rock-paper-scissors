@@ -6,17 +6,66 @@
   <title>Rock Paper Scissors</title>
 </head>
 <body>
+  <div id="game">
+    <p id="directions-text">Press the "r", "p", or "s" key to start the game!</p>
+    <p id="userChoice-text"> </p>
+    <p id="compChoice-text"> </p>
+    <p id="win-text"> </p>
+    <p id="lose-text"> </p>
+    <p id="tie-text"> </p>
+
+  </div>
+
+
   <script type="text/javascript">
-    // 1. Gather user input
-    // 2. Check for r, p, or s buttons pressed
-    // 3. Trigger event listener when one of those pressed
-    // 4. Have computer randomly "press" r, p, or s
-    // 5. Compare value of user input to comp randomly generated value
-    // If values are equal, increment the "tie" variable and update it in the HTML element
-    // 6. If user chooses r and comp chooses s, or user - p and comp - r, or user s and comp - p -- increment the "win" variable and update it in the HTML element
-    // 7. If user chooses r and comp chooses p, or user - p and comp - s, or user s and comp - r -- increment the "lose" variable and update it in the HTML element
-    // 8. Show stats on screen - What you pressed, what comp pressed, win, loss, tie
-    // 9. Repeat
+    
+    // Variable for the possible choices that the computer can choose from
+    let compChoices = ["r", "p", "s"];
+
+    // Variables to hold the number of Wins/Losses/Ties
+    let win = 0;
+    let lose = 0;
+    let tie = 0;
+
+    //Variables to hold a reference place in the HTML where we would like our information displayed
+    let directionsText = document.getElementById("directions-text");
+    let userChoiceText = document.getElementById("userChoice-text");
+    let compChoiceText = document.getElementById("compChoice-text");
+    let winText = document.getElementById("win-text");
+    let loseText = document.getElementById("lose-text");
+    let tieText = document.getElementById("tie-text");
+
+
+    document.onkeyup = function(event) {
+
+      // Determine which key the user chose
+      let userGuess = event.key;
+      
+      // Create a randomly generated choice for the computer
+      let compGuess = compChoices[Math.floor(Math.random() * compChoices.length)];
+
+      // Logic determining whether the winner wins, loses, or ties the computer
+      if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
+        if (userGuess === compGuess) {
+          tie++;
+        } else if ((userGuess === "r" && compGuess === "s") || (userGuess === "p" && compGuess === "r") || (userGuess === "s" && compGuess === "p")) {
+          win++;
+        } else {
+          lose++;
+        }
+      }
+
+      // Hide the directions
+      directionsText.textContent = "";
+
+      // Display information on the screen
+      userChoiceText.textContent = "You chose: " + userGuess;
+      compChoiceText.textContent = "Comp chose: " + compGuess;
+      winText.textContent = "Win: " + win;
+      loseText.textContent = "Lose: " + lose;
+      tieText.textContent = "Tie: " + tie;
+    }
+    
   </script>
   
 </body>
